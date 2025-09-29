@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Kebutuhan Kalori</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Kebutuhan Kalori</h2>
+        <div class="input-group"><label for="berat">Berat Badan (kg):</label><input type="number" id="berat" value="70" onkeyup="hitungKalori()"></div>
+        <div class="input-group"><label for="tinggi">Tinggi Badan (cm):</label><input type="number" id="tinggi" value="175" onkeyup="hitungKalori()"></div>
+        <div class="input-group"><label for="usia">Usia (tahun):</label><input type="number" id="usia" value="25" onkeyup="hitungKalori()"></div>
+        <div class="input-group">
+            <label for="gender">Jenis Kelamin:</label>
+            <select id="gender" onchange="hitungKalori()"><option value="male">Laki-laki</option><option value="female">Perempuan</option></select>
+        </div>
+        <div class="input-group">
+            <label for="aktivitas">Tingkat Aktivitas Harian:</label>
+            <select id="aktivitas" onchange="hitungKalori()">
+                <option value="1.2">Sangat Jarang (Pekerja kantoran)</option>
+                <option value="1.375">Jarang (Olahraga 1-3x seminggu)</option>
+                <option value="1.55" selected>Cukup (Olahraga 3-5x seminggu)</option>
+                <option value="1.725">Sering (Olahraga 6-7x seminggu)</option>
+                <option value="1.9">Sangat Sering (Pekerja fisik/atlet)</option>
+            </select>
+        </div>
+        <div class="result" id="hasilKalori">BMR: ... kkal/hari<br>TDEE: ... kkal/hari</div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Kesehatan</a>
+    </div>
+    <script>
+        function hitungKalori() {
+            const berat = parseFloat(document.getElementById('berat').value);
+            const tinggi = parseFloat(document.getElementById('tinggi').value);
+            const usia = parseInt(document.getElementById('usia').value);
+            const gender = document.getElementById('gender').value;
+            const faktorAktivitas = parseFloat(document.getElementById('aktivitas').value);
+            if (berat && tinggi && usia) {
+                let bmr = 0;
+                if (gender === 'male') { bmr = (10 * berat) + (6.25 * tinggi) - (5 * usia) + 5;
+                } else { bmr = (10 * berat) + (6.25 * tinggi) - (5 * usia) - 161; }
+                const tdee = bmr * faktorAktivitas;
+                document.getElementById('hasilKalori').innerHTML =
+                    `BMR: ${bmr.toFixed(0)} kkal/hari<div class='small-text'>(Kalori istirahat)</div><br>
+                     TDEE: ${tdee.toFixed(0)} kkal/hari<div class='small-text'>(Total kebutuhan kalori)</div>`;
+            }
+        }
+        window.onload = hitungKalori;
+    </script>
+</body>
+</html>

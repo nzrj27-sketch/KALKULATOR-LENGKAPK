@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Kuis Matematika</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Game Kuis Matematika</h2>
+        <div id="question" style="font-size: 2em; margin: 20px 0; font-weight: bold;">10 + 5 = ?</div>
+        <input type="number" id="answer-input" placeholder="Masukkan Jawaban" style="font-size: 1.2em; text-align: center;">
+        <button class="btn" style="background-color: #007BFF;" onclick="checkAnswer()">Cek Jawaban</button>
+        <button class="btn" style="background-color: #28a745; display: none;" onclick="generateQuestion()">Soal Baru</button>
+        <div id="result-status"></div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Matematika</a>
+    </div>
+    <script>
+        let currentAnswer;
+        const checkBtn = document.querySelector('.btn[onclick="checkAnswer()"]');
+        const nextBtn = document.querySelector('.btn[onclick="generateQuestion()"]');
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 20) + 1;
+            const num2 = Math.floor(Math.random() * 20) + 1;
+            const operator = ['+', '-', '*', '/'][Math.floor(Math.random() * 4)];
+            let questionString;
+
+            switch (operator) {
+                case '+':
+                    currentAnswer = num1 + num2;
+                    questionString = `${num1} + ${num2} = ?`;
+                    break;
+                case '-':
+                    // Ensure the result isn't negative for simplicity
+                    let bigger = Math.max(num1, num2);
+                    let smaller = Math.min(num1, num2);
+                    currentAnswer = bigger - smaller;
+                    questionString = `${bigger} - ${smaller} = ?`;
+                    break;
+                case '*':
+                    currentAnswer = num1 * num2;
+                    questionString = `${num1} x ${num2} = ?`;
+                    break;
+                case '/':
+                    // Create solvable division problems
+                    let product = num1 * num2;
+                    currentAnswer = num1;
+                    questionString = `${product} : ${num2} = ?`;
+                    break;
+            }
+            
+            document.getElementById('question').innerText = questionString;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('result-status').innerText = '';
+            checkBtn.style.display = 'block';
+            nextBtn.style.display = 'none';
+        }
+        
+        function checkAnswer() {
+            const userAnswer = parseFloat(document.getElementById('answer-input').value);
+            const resultStatus = document.getElementById('result-status');
+            
+            if (userAnswer === currentAnswer) {
+                resultStatus.innerText = 'Jawaban Benar!';
+                resultStatus.className = 'correct';
+            } else {
+                resultStatus.innerText = `Jawaban Salah. Jawaban yang benar adalah ${currentAnswer}`;
+                resultStatus.className = 'incorrect';
+            }
+            checkBtn.style.display = 'none';
+            nextBtn.style.display = 'block';
+        }
+        
+        window.onload = generateQuestion;
+    </script>
+</body>
+</html>

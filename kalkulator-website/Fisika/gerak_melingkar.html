@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Gerak Melingkar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Gerak Melingkar</h2>
+        <div class="input-group">
+            <label for="massa">Massa (m) dalam kg:</label>
+            <input type="number" id="massa" value="10">
+        </div>
+        <div class="input-group">
+            <label for="kecepatan">Kecepatan (v) dalam m/s:</label>
+            <input type="number" id="kecepatan" value="5">
+        </div>
+        <div class="input-group">
+            <label for="jari_jari">Jari-jari (r) dalam meter:</label>
+            <input type="number" id="jari_jari" value="2">
+        </div>
+        <button class="btn calc-btn" onclick="hitungGerakMelingkar()">Hitung</button>
+        <div class="result" id="hasilGerakMelingkar">
+            Percepatan Sentripetal (as): ... m/s²<br>
+            Gaya Sentripetal (Fs): ... N<br>
+            Gaya Sentrifugal (Fsf): ... N
+        </div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Fisika</a>
+    </div>
+    <script>
+        function hitungGerakMelingkar() {
+            const m = parseFloat(document.getElementById('massa').value);
+            const v = parseFloat(document.getElementById('kecepatan').value);
+            const r = parseFloat(document.getElementById('jari_jari').value);
+            if (r === 0) return;
+            const as = (v * v) / r;
+            const fs = m * as;
+            const fsf = fs;
+            document.getElementById('hasilGerakMelingkar').innerHTML =
+                `Percepatan Sentripetal (as): ${as.toFixed(2)} m/s²<br>
+                 Gaya Sentripetal (Fs): ${fs.toFixed(2)} N<br>
+                 Gaya Sentrifugal (Fsf): ${fsf.toFixed(2)} N`;
+        }
+        window.onload = hitungGerakMelingkar;
+    </script>
+</body>
+</html>

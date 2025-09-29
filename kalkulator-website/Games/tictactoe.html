@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic-Tac-Toe (vs Bot)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container game-board-container" style="max-width: 400px;">
+        <h2>Game Tic-Tac-Toe (vs Bot)</h2>
+        <div class="status" id="status">Giliran Anda (X)</div>
+        <div class="game-board" id="gameBoard">
+            <div class="cell" onclick="handleMove(0)"></div><div class="cell" onclick="handleMove(1)"></div><div class="cell" onclick="handleMove(2)"></div>
+            <div class="cell" onclick="handleMove(3)"></div><div class="cell" onclick="handleMove(4)"></div><div class="cell" onclick="handleMove(5)"></div>
+            <div class="cell" onclick="handleMove(6)"></div><div class="cell" onclick="handleMove(7)"></div><div class="cell" onclick="handleMove(8)"></div>
+        </div>
+        <button class="reset-btn" onclick="resetGame()">Mulai Ulang</button>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Games</a>
+    </div>
+    <script>
+        const statusDisplay = document.getElementById('status');
+        const cells = document.querySelectorAll('.cell');
+        let gameActive = true;
+        let currentPlayer = 'X';
+        let gameState = ['', '', '', '', '', '', '', '', ''];
+        const winningConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+        
+        function handleMove(index) {
+            if (gameState[index] !== '' || !gameActive || currentPlayer === 'O') return;
+            gameState[index] = currentPlayer;
+            cells[index].innerText = currentPlayer;
+            if (checkResult()) return;
+            currentPlayer = 'O';
+            statusDisplay.innerText = 'Giliran Bot (O)';
+            setTimeout(botMove, 500);
+        }
+        function botMove() {
+            if (!gameActive) return;
+            let availableCells = gameState.map((val, idx) => val === '' ? idx : null).filter(val => val !== null);
+            let move = -1;
+            // Bot logic: win, block, or random
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if(gameState[a] === 'O' && gameState[b] === 'O' && gameState[c] === '') {move=c; break;}
+                if(gameState[a] === 'O' && gameState[c] === 'O' && gameState[b] === '') {move=b; break;}
+                if(gameState[b] === 'O' && gameState[c] === 'O' && gameState[a] === '') {move=a; break;}
+            }
+            if (move === -1) {
+                for (let condition of winningConditions) {
+                    const [a, b, c] = condition;
+                    if(gameState[a] === 'X' && gameState[b] === 'X' && gameState[c] === '') {move=c; break;}
+                    if(gameState[a] === 'X' && gameState[c] === 'X' && gameState[b] === '') {move=b; break;}
+                    if(gameState[b] === 'X' && gameState[c] === 'X' && gameState[a] === '') {move=a; break;}
+                }
+            }
+            if (move === -1) {
+                if (availableCells.includes(4)) move = 4;
+                else move = availableCells[Math.floor(Math.random() * availableCells.length)];
+            }
+            gameState[move] = 'O';
+            cells[move].innerText = 'O';
+            if (!checkResult()) {
+                currentPlayer = 'X';
+                statusDisplay.innerText = 'Giliran Anda (X)';
+            }
+        }
+        function checkResult() {
+            let roundWon = false;
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                    roundWon = true; break;
+                }
+            }
+            if (roundWon) { statusDisplay.innerText = `Pemain ${currentPlayer} menang!`; gameActive = false; return true; }
+            if (!gameState.includes('')) { statusDisplay.innerText = `Permainan seri!`; gameActive = false; return true; }
+            return false;
+        }
+        function resetGame() {
+            gameActive = true; currentPlayer = 'X'; gameState = ['', '', '', '', '', '', '', '', ''];
+            statusDisplay.innerText = `Giliran Anda (${currentPlayer})`;
+            cells.forEach(cell => { cell.innerText = ''; });
+        }
+    </script>
+</body>
+</html>

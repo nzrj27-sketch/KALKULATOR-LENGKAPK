@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Permutasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Permutasi (P(n,r))</h2>
+        <div class="input-group">
+            <label for="n">Jumlah objek (n):</label>
+            <input type="number" id="n" value="10" onkeyup="hitungPermutasi()">
+        </div>
+        <div class="input-group">
+            <label for="r">Jumlah objek yang diambil (r):</label>
+            <input type="number" id="r" value="3" onkeyup="hitungPermutasi()">
+        </div>
+        <div class="result" id="hasilPermutasi" style="text-align:center;">P(n,r) = ...</div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Matematika</a>
+    </div>
+    <script>
+        function factorial(num) {
+            if (num < 0) return 0;
+            if (num > 170) return Infinity;
+            let res = 1;
+            for (let i = 2; i <= num; i++) {
+                res *= i;
+            }
+            return res;
+        }
+        function hitungPermutasi() {
+            const n = parseInt(document.getElementById('n').value);
+            const r = parseInt(document.getElementById('r').value);
+            if (n < r || n < 0 || r < 0) {
+                document.getElementById('hasilPermutasi').innerText = 'Input tidak valid (n >= r dan n, r >= 0).';
+                return;
+            }
+            const permutasi = factorial(n) / factorial(n - r);
+            if (permutasi === Infinity) {
+                document.getElementById('hasilPermutasi').innerText = 'Hasil terlalu besar untuk ditampilkan.';
+            } else {
+                document.getElementById('hasilPermutasi').innerText = 'P(' + n + ',' + r + ') = ' + permutasi.toLocaleString();
+            }
+        }
+        window.onload = hitungPermutasi;
+    </script>
+</body>
+</html>

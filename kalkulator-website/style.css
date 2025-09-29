@@ -1,0 +1,88 @@
+/* General Body and Container Styles */
+body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; text-align: center; color: #333; }
+.container { max-width: 600px; margin: 20px auto; padding: 30px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+h2 { color: #333; }
+h3 { color: #007BFF; margin-top: 25px; border-top: 1px solid #ccc; padding-top: 20px;}
+
+/* Buttons and Links */
+.menu-btn { display: block; width: 80%; padding: 15px; margin: 20px auto; font-size: 1.2em; color: #fff; background-color: #007BFF; border: none; border-radius: 5px; text-decoration: none; cursor: pointer; }
+.menu-btn:hover { background-color: #0056b3; }
+.back-btn { background-color: #6c757d; }
+.back-btn:hover { background-color: #5a6268; }
+.back-link { display: inline-block; margin-top: 30px; text-decoration: none; color: #007BFF; }
+.btn { padding: 10px; color: #fff; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; margin-top: 10px; width: 100%;}
+
+/* Form and Input Styles */
+.input-group { margin-bottom: 15px; text-align: left; }
+label { display: block; margin-bottom: 5px; color: #555; }
+input, select { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
+
+/* Result and Status Display */
+.result { margin-top: 20px; padding: 15px; background-color: #e9ecef; border-radius: 5px; font-size: 1.2em; font-weight: bold; text-align: left; overflow-wrap: break-word; }
+.status { margin-top: 10px; font-weight: bold; }
+
+/* --- PAGE SPECIFIC STYLES --- */
+
+/* Index Page Clock */
+.clock { font-size: 1.5em; font-weight: bold; margin-bottom: 20px; color: #555; }
+.footer { margin-top: 20px; color: #6c757d; font-size: 0.9em; }
+
+/* Converter & Calculator Specific */
+.converter-group { display: flex; align-items: center; gap: 10px; }
+.equals { font-size: 2em; color: #555; }
+.small-text { font-size: 0.8em; color: #6c757d; margin-top: 5px; font-weight: normal; }
+.hr-divider { border: 0; height: 1px; background-color: #ccc; margin: 30px 0; }
+.calc-btn { background-color: #28a745; }
+.calc-btn:hover { background-color: #218838; }
+
+/* Scientific Calculator */
+.calculator { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px; }
+.display { grid-column: span 5; background-color: #e9ecef; text-align: right; padding: 15px; font-size: 2em; border-radius: 5px; margin-bottom: 10px; overflow-x: auto; }
+.calculator .btn { padding: 15px; font-size: 1.2em; background-color: #f8f9fa; color: #333; }
+.calculator .btn:active { background-color: #e2e6ea; }
+.calculator .btn.operator { background-color: #28a745; color: #fff; }
+.calculator .btn.operator:active { background-color: #218838; }
+.calculator .btn.equals { grid-column: span 2; background-color: #007BFF; color: #fff; }
+.calculator .btn.equals:active { background-color: #0056b3; }
+.calculator .btn.clear { background-color: #dc3545; color: #fff; }
+.calculator .btn.clear:active { background-color: #c82333; }
+.calculator .btn.backspace { background-color: #ffc107; color: #333; }
+.calculator .btn.backspace:active { background-color: #e0a800; }
+
+/* Electricity Calculator */
+.appliance-item { display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+.appliance-item > div { flex: 1; }
+.add-btn { background-color: #007BFF; }
+.add-btn:hover { background-color: #0056b3; }
+.remove-btn { background-color: #dc3545; padding: 5px 10px; font-size: 0.8em; width: auto;}
+
+/* Periodic Table */
+.periodic-table-grid { display: grid; grid-template-columns: repeat(18, 1fr); grid-template-rows: repeat(7, auto); gap: 5px; margin: auto; }
+.element { background-color: #e0e0e0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; font-size: 0.7em; text-align: center; position: relative; cursor: help; }
+.atomic-number { position: absolute; top: 2px; left: 2px; font-size: 0.8em; }
+.symbol { font-size: 1.5em; font-weight: bold; margin: 10px 0 5px; }
+.name { font-size: 0.6em; line-height: 1.1; }
+.atomic-mass { font-size: 0.6em; }
+.alkali-metal { background-color: #ff9999; }
+.alkaline-earth { background-color: #ffcc99; }
+.transition-metal { background-color: #ffff99; }
+.post-transition { background-color: #ccff99; }
+.metalloid { background-color: #99ff99; }
+.nonmetal { background-color: #99ffff; }
+.halogen { background-color: #99ccff; }
+.noble-gas { background-color: #cc99ff; }
+.lanthanide { background-color: #ff99ff; }
+.actinide { background-color: #ffccff; }
+.lanthanides-block, .actinides-block { grid-column: 3 / span 15; display: grid; grid-template-columns: repeat(15, 1fr); gap: 5px; }
+
+/* Tic-Tac-Toe Game */
+.game-board { display: grid; grid-template-columns: repeat(3, 100px); grid-template-rows: repeat(3, 100px); gap: 5px; margin: 20px auto; background-color: #ccc; border: 5px solid #ccc; }
+.cell { width: 100px; height: 100px; background-color: #fff; display: flex; justify-content: center; align-items: center; font-size: 3em; cursor: pointer; }
+.game-board-container .status { margin-top: 20px; font-size: 1.5em; font-weight: bold; }
+.reset-btn { padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; margin-top: 20px; }
+.reset-btn:hover { background-color: #0056b3; }
+
+/* Math Quiz & Guessing Game */
+.correct { color: green; }
+.incorrect { color: red; }
+#feedback, #result-status { margin-top: 15px; font-size: 1.2em; font-weight: bold; min-height: 25px; }

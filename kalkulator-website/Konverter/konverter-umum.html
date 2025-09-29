@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konverter Satuan Umum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Konverter Satuan Umum</h2>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Konverter</a>
+        <h3>Konverter Panjang</h3>
+        <div class="converter-group">
+            <div class="input-group"><label for="val-panjang">Nilai</label><input type="number" id="val-panjang" value="1" onkeyup="hitungPanjang()"><select id="from-panjang" onchange="hitungPanjang()"><option value="km">Kilometer</option><option value="m" selected>Meter</option><option value="cm">Sentimeter</option><option value="mm">Milimeter</option><option value="mi">Mil</option><option value="ft">Kaki (Feet)</option><option value="in">Inci</option></select></div>
+            <span class="equals">=</span>
+            <div class="input-group"><label for="to-panjang">Hasil</label><div id="hasil-panjang" class="result" style="text-align:center;justify-content:center;">...</div><select id="to-panjang" onchange="hitungPanjang()"><option value="km">Kilometer</option><option value="m">Meter</option><option value="cm" selected>Sentimeter</option><option value="mm">Milimeter</option><option value="mi">Mil</option><option value="ft">Kaki (Feet)</option><option value="in">Inci</option></select></div>
+        </div>
+        <h3>Konverter Massa</h3>
+        <div class="converter-group">
+            <div class="input-group"><label for="val-massa">Nilai</label><input type="number" id="val-massa" value="1" onkeyup="hitungMassa()"><select id="from-massa" onchange="hitungMassa()"><option value="kg" selected>Kilogram</option><option value="g">Gram</option><option value="mg">Miligram</option><option value="t">Ton Metrik</option><option value="lb">Pound (lb)</option><option value="oz">Ons (oz)</option></select></div>
+            <span class="equals">=</span>
+            <div class="input-group"><label for="to-massa">Hasil</label><div id="hasil-massa" class="result" style="text-align:center;justify-content:center;">...</div><select id="to-massa" onchange="hitungMassa()"><option value="kg">Kilogram</option><option value="g" selected>Gram</option><option value="mg">Miligram</option><option value="t">Ton Metrik</option><option value="lb">Pound (lb)</option><option value="oz">Ons (oz)</option></select></div>
+        </div>
+        <h3>Konverter Ukuran Data</h3>
+        <div class="converter-group">
+            <div class="input-group"><label for="val-data">Nilai</label><input type="number" id="val-data" value="1" onkeyup="hitungData()"><select id="from-data" onchange="hitungData()"><option value="tb">Terabyte (TB)</option><option value="gb" selected>Gigabyte (GB)</option><option value="mb">Megabyte (MB)</option><option value="kb">Kilobyte (KB)</option><option value="b">Byte</option></select></div>
+            <span class="equals">=</span>
+            <div class="input-group"><label for="to-data">Hasil</label><div id="hasil-data" class="result" style="text-align:center;justify-content:center;">...</div><select id="to-data" onchange="hitungData()"><option value="tb">Terabyte (TB)</option><option value="gb">Gigabyte (GB)</option><option value="mb" selected>Megabyte (MB)</option><option value="kb">Kilobyte (KB)</option><option value="b">Byte</option></select></div>
+        </div>
+    </div>
+    <script>
+        function convertUnit(value, fromUnit, toUnit, rates) { if (!value) return 0; const fromFactor = rates[fromUnit]; const toFactor = rates[toUnit]; return (value * fromFactor) / toFactor; }
+        function hitungPanjang() { const rates = { 'km': 1000, 'm': 1, 'cm': 0.01, 'mm': 0.001, 'mi': 1609.34, 'ft': 0.3048, 'in': 0.0254 }; const value = parseFloat(document.getElementById('val-panjang').value); const from = document.getElementById('from-panjang').value; const to = document.getElementById('to-panjang').value; const result = convertUnit(value, from, to, rates); document.getElementById('hasil-panjang').innerText = result.toLocaleString(undefined, { maximumFractionDigits: 5 }); }
+        function hitungMassa() { const rates = { 't': 1000000, 'kg': 1000, 'g': 1, 'mg': 0.001, 'lb': 453.592, 'oz': 28.3495 }; const value = parseFloat(document.getElementById('val-massa').value); const from = document.getElementById('from-massa').value; const to = document.getElementById('to-massa').value; const result = convertUnit(value, from, to, rates); document.getElementById('hasil-massa').innerText = result.toLocaleString(undefined, { maximumFractionDigits: 5 }); }
+        function hitungData() { const rates = { 'tb': 1024 ** 4, 'gb': 1024 ** 3, 'mb': 1024 ** 2, 'kb': 1024, 'b': 1 }; const value = parseFloat(document.getElementById('val-data').value); const from = document.getElementById('from-data').value; const to = document.getElementById('to-data').value; const result = convertUnit(value, from, to, rates); document.getElementById('hasil-data').innerText = result.toLocaleString(undefined, { maximumFractionDigits: 5 }); }
+        window.onload = function () { hitungPanjang(); hitungMassa(); hitungData(); };
+    </script>
+</body>
+</html>

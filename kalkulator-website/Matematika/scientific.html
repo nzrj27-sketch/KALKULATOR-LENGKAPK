@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Ilmiah</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Ilmiah</h2>
+        <div class="display" id="display">0</div>
+        <div class="calculator">
+            <button class="btn" onclick="appendToDisplay('Math.PI')">&pi;</button>
+            <button class="btn" onclick="appendToDisplay('Math.E')">e</button>
+            <button class="btn clear" onclick="clearDisplay()">AC</button>
+            <button class="btn backspace" onclick="backspace()">&larr;</button>
+            <button class="btn operator" onclick="appendToDisplay('/')">/</button>
+            <button class="btn" onclick="calculateFunction('sin')">sin</button>
+            <button class="btn" onclick="calculateFunction('cos')">cos</button>
+            <button class="btn" onclick="calculateFunction('tan')">tan</button>
+            <button class="btn" onclick="appendToDisplay('**')">^</button>
+            <button class="btn operator" onclick="appendToDisplay('*')">x</button>
+            <button class="btn" onclick="appendToDisplay('7')">7</button>
+            <button class="btn" onclick="appendToDisplay('8')">8</button>
+            <button class="btn" onclick="appendToDisplay('9')">9</button>
+            <button class="btn" onclick="appendToDisplay('(')">(</button>
+            <button class="btn operator" onclick="appendToDisplay('-')">-</button>
+            <button class="btn" onclick="appendToDisplay('4')">4</button>
+            <button class="btn" onclick="appendToDisplay('5')">5</button>
+            <button class="btn" onclick="appendToDisplay('6')">6</button>
+            <button class="btn" onclick="appendToDisplay(')')">)</button>
+            <button class="btn operator" onclick="appendToDisplay('+')" style="grid-row: span 2;">+</button>
+            <button class="btn" onclick="appendToDisplay('1')">1</button>
+            <button class="btn" onclick="appendToDisplay('2')">2</button>
+            <button class="btn" onclick="appendToDisplay('3')">3</button>
+            <button class="btn" onclick="calculateFunction('sqrt')">&radic;</button>
+            <button class="btn" onclick="appendToDisplay('0')" style="grid-column: span 2;">0</button>
+            <button class="btn" onclick="appendToDisplay('.')">.</button>
+            <button class="btn equals" onclick="calculate()">=</button>
+        </div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Matematika</a>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+        let currentExpression = '0';
+
+        function appendToDisplay(value) {
+            if (currentExpression === '0' && value !== '.') {
+                currentExpression = value;
+            } else {
+                currentExpression += value;
+            }
+            display.innerText = currentExpression;
+        }
+
+        function clearDisplay() {
+            currentExpression = '0';
+            display.innerText = currentExpression;
+        }
+
+        function backspace() {
+            if (currentExpression.length > 1) {
+                currentExpression = currentExpression.slice(0, -1);
+            } else {
+                currentExpression = '0';
+            }
+            display.innerText = currentExpression;
+        }
+
+        function calculate() {
+            try {
+                const result = eval(currentExpression);
+                currentExpression = result.toString();
+                display.innerText = result.toLocaleString();
+            } catch (e) {
+                display.innerText = 'Error';
+                currentExpression = '0';
+            }
+        }
+
+        function calculateFunction(func) {
+            try {
+                const val = eval(currentExpression);
+                if (isNaN(val)) {
+                    display.innerText = 'Error';
+                    return;
+                }
+                let result;
+                switch (func) {
+                    case 'sin':
+                        result = Math.sin(val * Math.PI / 180);
+                        break;
+                    case 'cos':
+                        result = Math.cos(val * Math.PI / 180);
+                        break;
+                    case 'tan':
+                        result = Math.tan(val * Math.PI / 180);
+                        break;
+                    case 'sqrt':
+                        result = Math.sqrt(val);
+                        break;
+                }
+                currentExpression = result.toString();
+                display.innerText = result.toLocaleString(undefined, { maximumFractionDigits: 10 });
+            } catch (e) {
+                display.innerText = 'Error';
+                currentExpression = '0';
+            }
+        }
+    </script>
+</body>
+</html>

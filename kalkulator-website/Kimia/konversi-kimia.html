@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Konversi & Molaritas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 500px;">
+        <h2>Kalkulator Konversi & Molaritas</h2>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Kimia</a>
+        <h3>1. Massa &#8596; Mol</h3>
+        <div class="input-group"><label for="massa">Massa (gram):</label><input type="number" id="massa" value="10"></div>
+        <div class="input-group"><label for="mr">Massa Molar (Mr):</label><input type="number" id="mr" value="44.01"></div>
+        <button class="btn calc-btn" onclick="hitungMassaMol()">Hitung Mol</button>
+        <div class="result" id="hasilMassaMol">Mol: ...</div>
+        <hr class="hr-divider">
+        <h3>2. Mol &#8596; Jumlah Partikel</h3>
+        <div class="input-group"><label for="molPartikel">Mol:</label><input type="number" id="molPartikel" value="0.25"></div>
+        <button class="btn calc-btn" onclick="hitungPartikel()">Hitung Jumlah Partikel</button>
+        <div class="result" id="hasilPartikel">Jumlah Partikel: ...</div>
+        <div class="small-text">Angka Avogadro: 6.022 x 10<sup>23</sup></div>
+        <hr class="hr-divider">
+        <h3>3. Molaritas (M = n/V)</h3>
+        <div class="input-group"><label for="molaritas">Molaritas (M)</label><input type="number" id="molaritas" placeholder="mol/L"></div>
+        <div class="input-group"><label for="mol-larutan">Jumlah Mol (n)</label><input type="number" id="mol-larutan" value="1" placeholder="mol"></div>
+        <div class="input-group"><label for="volume-larutan">Volume Larutan (V)</label><input type="number" id="volume-larutan" value="1" placeholder="Liter"></div>
+        <button class="btn calc-btn" onclick="hitungMolaritas()">Hitung Variabel Kosong</button>
+        <div class="result" id="hasilMolaritas">Hasil: ...</div>
+        <hr class="hr-divider">
+        <h3>4. Hukum Gas Ideal (PV=nRT)</h3>
+        <div class="input-group"><label for="p-val">Tekanan (P):</label><input type="number" id="p-val" value="1" placeholder="atm"></div>
+        <div class="input-group"><label for="v-val">Volume (V):</label><input type="number" id="v-val" placeholder="liter"></div>
+        <div class="input-group"><label for="n-val">Jumlah Mol (n):</label><input type="number" id="n-val" value="1" placeholder="mol"></div>
+        <div class="input-group"><label for="t-val">Suhu (T):</label><input type="number" id="t-val" value="273.15" placeholder="K (Kelvin)"></div>
+        <button class="btn calc-btn" onclick="hitungGasIdeal()">Hitung Parameter yang Kosong</button>
+        <div class="result" id="hasilGasIdeal">Hasil: ...</div>
+        <div class="small-text">Konstanta R = 0.082 L.atm/mol.K</div>
+    </div>
+    <script>
+        const R = 0.082;
+        const AVOGADRO = 6.022e23;
+        function hitungMassaMol() {
+            const massa = parseFloat(document.getElementById('massa').value);
+            const mr = parseFloat(document.getElementById('mr').value);
+            if (massa && mr) {
+                const mol = massa / mr;
+                document.getElementById('hasilMassaMol').innerText = 'Mol: ' + mol.toFixed(4);
+            }
+        }
+        function hitungPartikel() {
+            const mol = parseFloat(document.getElementById('molPartikel').value);
+            if (mol) {
+                const partikel = mol * AVOGADRO;
+                document.getElementById('hasilPartikel').innerText = 'Jumlah Partikel: ' + partikel.toExponential(3);
+            }
+        }
+        function hitungMolaritas() {
+            let M = parseFloat(document.getElementById('molaritas').value);
+            let n = parseFloat(document.getElementById('mol-larutan').value);
+            let V = parseFloat(document.getElementById('volume-larutan').value);
+            let hasil = 'Masukkan dua dari tiga parameter (M, n, V).';
+            if (!M && n && V) { M = n / V; hasil = 'Molaritas (M) = ' + M.toFixed(4) + ' mol/L';
+            } else if (M && !n && V) { n = M * V; hasil = 'Jumlah Mol (n) = ' + n.toFixed(4) + ' mol';
+            } else if (M && n && !V) { V = n / M; hasil = 'Volume (V) = ' + V.toFixed(4) + ' L'; }
+            document.getElementById('hasilMolaritas').innerText = hasil;
+        }
+        function hitungGasIdeal() {
+            let P = parseFloat(document.getElementById('p-val').value);
+            let V = parseFloat(document.getElementById('v-val').value);
+            let n = parseFloat(document.getElementById('n-val').value);
+            let T = parseFloat(document.getElementById('t-val').value);
+            let hasil = 'Masukkan tiga dari empat parameter (P, V, n, T).';
+            if (!P && V && n && T) { P = (n * R * T) / V; hasil = 'Tekanan (P) = ' + P.toFixed(4) + ' atm';
+            } else if (P && !V && n && T) { V = (n * R * T) / P; hasil = 'Volume (V) = ' + V.toFixed(4) + ' L';
+            } else if (P && V && !n && T) { n = (P * V) / (R * T); hasil = 'Jumlah Mol (n) = ' + n.toFixed(4) + ' mol';
+            } else if (P && V && n && !T) { T = (P * V) / (n * R); hasil = 'Suhu (T) = ' + T.toFixed(4) + ' K'; }
+            document.getElementById('hasilGasIdeal').innerText = hasil;
+        }
+        window.onload = () => { hitungMassaMol(); hitungPartikel(); };
+    </script>
+</body>
+</html>

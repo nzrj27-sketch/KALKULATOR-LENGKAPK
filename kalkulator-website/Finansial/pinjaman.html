@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Angsuran Pinjaman</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Angsuran Pinjaman</h2>
+        <div class="input-group">
+            <label for="jumlah">Jumlah Pinjaman (Rp):</label>
+            <input type="number" id="jumlah" value="10000000" onkeyup="hitungAngsuran()">
+        </div>
+        <div class="input-group">
+            <label for="bunga">Suku Bunga Tahunan (%):</label>
+            <input type="number" id="bunga" value="10" onkeyup="hitungAngsuran()">
+        </div>
+        <div class="input-group">
+            <label for="tenor">Jangka Waktu (Bulan):</label>
+            <input type="number" id="tenor" value="12" onkeyup="hitungAngsuran()">
+        </div>
+        <div class="result" id="hasilPinjaman">
+            Angsuran per Bulan: Rp ...<br>
+            Total Pembayaran: Rp ...<br>
+            Total Bunga: Rp ...
+        </div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Finansial</a>
+    </div>
+    <script>
+        function hitungAngsuran() {
+            const p = parseFloat(document.getElementById('jumlah').value);
+            const annualRate = parseFloat(document.getElementById('bunga').value);
+            const n = parseInt(document.getElementById('tenor').value);
+            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+            if (p > 0 && annualRate >= 0 && n > 0) {
+                const r = (annualRate / 100) / 12;
+                if (r > 0) {
+                    const M = p * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+                    const totalPembayaran = M * n;
+                    const totalBunga = totalPembayaran - p;
+                    document.getElementById('hasilPinjaman').innerHTML =
+                        `Angsuran per Bulan: ${formatter.format(M)}<br>
+                         Total Pembayaran: ${formatter.format(totalPembayaran)}<br>
+                         Total Bunga: ${formatter.format(totalBunga)}`;
+                } else { // Handle 0% interest rate
+                    const M = p / n;
+                    document.getElementById('hasilPinjaman').innerHTML =
+                        `Angsuran per Bulan: ${formatter.format(M)}<br>
+                         Total Pembayaran: ${formatter.format(p)}<br>
+                         Total Bunga: ${formatter.format(0)}`;
+                }
+            } else {
+                document.getElementById('hasilPinjaman').innerHTML =
+                    `Angsuran per Bulan: Rp ...<br>
+                     Total Pembayaran: Rp ...<br>
+                     Total Bunga: Rp ...`;
+            }
+        }
+        window.onload = hitungAngsuran;
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Momentum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Momentum (P = m * v)</h2>
+        <div class="input-group">
+            <label for="massa">Massa (m) dalam kg:</label>
+            <input type="number" id="massa" value="10">
+        </div>
+        <div class="input-group">
+            <label for="kecepatan">Kecepatan (v) dalam m/s:</label>
+            <input type="number" id="kecepatan" value="5">
+            <small>Satuan default: m/s</small>
+            <button class="btn" style="background-color: #ffc107; color: #333; font-size: 0.9em; padding: 8px;" onclick="konversiKecepatan()">Konversi km/h ke m/s</button>
+        </div>
+        <button class="btn calc-btn" onclick="hitungMomentum()">Hitung</button>
+        <div class="result" id="hasilMomentum" style="text-align:center;">Momentum: ... kg.m/s</div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Fisika</a>
+    </div>
+    <script>
+        function konversiKecepatan() {
+            let kecepatan_kmh = parseFloat(document.getElementById('kecepatan').value);
+            let kecepatan_ms = kecepatan_kmh * 1000 / 3600;
+            document.getElementById('kecepatan').value = kecepatan_ms.toFixed(2);
+        }
+        function hitungMomentum() {
+            const massa = parseFloat(document.getElementById('massa').value);
+            const kecepatan = parseFloat(document.getElementById('kecepatan').value);
+            const momentum = massa * kecepatan;
+            document.getElementById('hasilMomentum').innerText = 'Momentum: ' + momentum.toFixed(2) + ' kg.m/s';
+        }
+        window.onload = hitungMomentum;
+    </script>
+</body>
+</html>

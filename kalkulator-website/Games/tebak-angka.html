@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Tebak Angka</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Game Tebak Angka</h2>
+        <p id="instruction">Saya sudah memilih sebuah angka antara 1 dan 100. Coba tebak!</p>
+        <input type="number" id="guess-input" placeholder="Masukkan tebakanmu">
+        <button class="btn" style="background-color: #007BFF;" onclick="checkGuess()">Tebak!</button>
+        <button class="btn" style="background-color: #28a745; display: none;" onclick="initGame()">Main Lagi</button>
+        <div id="feedback"></div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Games</a>
+    </div>
+    <script>
+        let randomNumber;
+        let attempts;
+        const feedbackEl = document.getElementById('feedback');
+        const inputEl = document.getElementById('guess-input');
+        const guessBtn = document.querySelector('.btn[onclick="checkGuess()"]');
+        const resetBtn = document.querySelector('.btn[onclick="initGame()"]');
+
+        function initGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            feedbackEl.textContent = '';
+            feedbackEl.className = '';
+            inputEl.value = '';
+            inputEl.disabled = false;
+            guessBtn.style.display = 'block';
+            resetBtn.style.display = 'none';
+        }
+        function checkGuess() {
+            const userGuess = parseInt(inputEl.value);
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                feedbackEl.textContent = 'Masukkan angka valid antara 1-100.';
+                feedbackEl.className = 'incorrect';
+                return;
+            }
+            attempts++;
+            if (userGuess < randomNumber) {
+                feedbackEl.textContent = `Terlalu rendah! Coba lagi. (Percobaan: ${attempts})`;
+                feedbackEl.className = 'incorrect';
+            } else if (userGuess > randomNumber) {
+                feedbackEl.textContent = `Terlalu tinggi! Coba lagi. (Percobaan: ${attempts})`;
+                feedbackEl.className = 'incorrect';
+            } else {
+                feedbackEl.textContent = `Selamat! Anda menebak dengan benar dalam ${attempts} percobaan.`;
+                feedbackEl.className = 'correct';
+                inputEl.disabled = true;
+                guessBtn.style.display = 'none';
+                resetBtn.style.display = 'block';
+            }
+        }
+        window.onload = initGame;
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Impuls</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Impuls (I = F * &#916;t)</h2>
+        <div class="input-group">
+            <label for="gaya">Gaya (F) dalam Newton (N):</label>
+            <input type="number" id="gaya" value="20">
+        </div>
+        <div class="input-group">
+            <label for="waktu">Selang Waktu (&#916;t) dalam detik (s):</label>
+            <input type="number" id="waktu" value="2">
+        </div>
+        <button class="btn calc-btn" onclick="hitungImpuls()">Hitung</button>
+        <div class="result" id="hasilImpuls" style="text-align:center;">Impuls: ... N.s</div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Fisika</a>
+    </div>
+    <script>
+        function hitungImpuls() {
+            const gaya = parseFloat(document.getElementById('gaya').value);
+            const waktu = parseFloat(document.getElementById('waktu').value);
+            const impuls = gaya * waktu;
+            document.getElementById('hasilImpuls').innerText = 'Impuls: ' + impuls.toFixed(2) + ' N.s';
+        }
+        window.onload = hitungImpuls;
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Tumbukan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Tumbukan</h2>
+        <p>Masukkan massa dan kecepatan awal kedua benda:</p>
+        <select id="jenisTumbukan" onchange="hitungTumbukan()">
+            <option value="elastis">Tumbukan Lenting Sempurna</option>
+            <option value="inelastis">Tumbukan Tidak Lenting Sempurna</option>
+        </select>
+        <div class="input-group">
+            <label for="m1">Massa benda 1 (m1) dalam kg:</label>
+            <input type="number" id="m1" value="5" onkeyup="hitungTumbukan()">
+        </div>
+        <div class="input-group">
+            <label for="v1">Kecepatan awal benda 1 (v1) dalam m/s:</label>
+            <input type="number" id="v1" value="10" onkeyup="hitungTumbukan()">
+        </div>
+        <div class="input-group">
+            <label for="m2">Massa benda 2 (m2) dalam kg:</label>
+            <input type="number" id="m2" value="3" onkeyup="hitungTumbukan()">
+        </div>
+        <div class="input-group">
+            <label for="v2">Kecepatan awal benda 2 (v2) dalam m/s:</label>
+            <input type="number" id="v2" value="0" onkeyup="hitungTumbukan()">
+        </div>
+        <div class="result" id="hasilTumbukan">
+            v1' (akhir) = ... m/s <br>
+            v2' (akhir) = ... m/s
+        </div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Fisika</a>
+    </div>
+    <script>
+        function hitungTumbukan() {
+            const m1 = parseFloat(document.getElementById('m1').value);
+            const v1 = parseFloat(document.getElementById('v1').value);
+            const m2 = parseFloat(document.getElementById('m2').value);
+            const v2 = parseFloat(document.getElementById('v2').value);
+            const jenis = document.getElementById('jenisTumbukan').value;
+
+            if (isNaN(m1) || isNaN(v1) || isNaN(m2) || isNaN(v2)) return;
+
+            let v1_akhir, v2_akhir;
+            if (jenis === "elastis") {
+                v1_akhir = ((m1 - m2) * v1 + 2 * m2 * v2) / (m1 + m2);
+                v2_akhir = ((m2 - m1) * v2 + 2 * m1 * v1) / (m1 + m2);
+                document.getElementById('hasilTumbukan').innerHTML = `v1' (akhir) = ${v1_akhir.toFixed(2)} m/s <br> v2' (akhir) = ${v2_akhir.toFixed(2)} m/s`;
+            } else if (jenis === "inelastis") {
+                const v_akhir = (m1 * v1 + m2 * v2) / (m1 + m2);
+                document.getElementById('hasilTumbukan').innerHTML = `v' (kecepatan akhir bersama) = ${v_akhir.toFixed(2)} m/s`;
+            }
+        }
+        window.onload = hitungTumbukan;
+    </script>
+</body>
+</html>

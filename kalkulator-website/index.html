@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Lengkap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <div class="clock">
+            <div id="date"></div>
+        </div>
+        <h2>Pilih Kategori Kalkulator</h2>
+        <a href="fisika/" class="menu-btn">Kalkulator Fisika</a>
+        <a href="matematika/" class="menu-btn">Kalkulator Matematika</a>
+        <a href="kimia/" class="menu-btn">Kalkulator Kimia</a>
+        <a href="kesehatan/" class="menu-btn">Kalkulator Kesehatan</a>
+        <a href="rumahtangga/" class="menu-btn">Kalkulator Rumah Tangga</a>
+        <a href="finansial/" class="menu-btn">Kalkulator Finansial</a>
+        <a href="konverter/" class="menu-btn">Konverter Satuan</a>
+        <a href="waktu/" class="menu-btn">Kalkulator Waktu & Tanggal</a>
+        <a href="games/" class="menu-btn">Game Sederhana</a>
+        <div class="footer">Made by Nz</div>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('date').innerHTML = now.toLocaleDateString('id-ID', optionsDate) + '<br>' + now.toLocaleTimeString('id-ID', optionsTime);
+        }
+        // Run once on load, then set interval
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

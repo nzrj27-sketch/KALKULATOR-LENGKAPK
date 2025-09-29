@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Vektor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .vector-input { display: flex; gap: 10px; }
+        .vector-input input { width: 50%; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Vektor</h2>
+        <p>Masukkan komponen gaya (Fx dan Fy) dari setiap vektor:</p>
+        <div id="vectorInputs">
+            <div class="vector-input">
+                <input type="number" class="fx-input" placeholder="Fx" value="3" onkeyup="hitungResultan()">
+                <input type="number" class="fy-input" placeholder="Fy" value="4" onkeyup="hitungResultan()">
+            </div>
+        </div>
+        <button class="btn add-btn" onclick="tambahVektor()">Tambah Vektor</button>
+        <div class="result" id="hasilResultan">
+            Total Fx: ... N<br>
+            Total Fy: ... N<br>
+            Resultan Gaya: ... N<br>
+            Sudut Resultan: ... &deg;
+        </div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Fisika</a>
+    </div>
+    <script>
+        function tambahVektor() {
+            const div = document.createElement('div');
+            div.className = 'vector-input';
+            div.style.marginTop = '10px';
+            div.innerHTML = '<input type="number" class="fx-input" placeholder="Fx" onkeyup="hitungResultan()"> <input type="number" class="fy-input" placeholder="Fy" onkeyup="hitungResultan()">';
+            document.getElementById('vectorInputs').appendChild(div);
+        }
+
+        function hitungResultan() {
+            const fxs = document.querySelectorAll('.fx-input');
+            const fys = document.querySelectorAll('.fy-input');
+            let totalFx = 0;
+            let totalFy = 0;
+            fxs.forEach(input => {
+                totalFx += parseFloat(input.value) || 0;
+            });
+            fys.forEach(input => {
+                totalFy += parseFloat(input.value) || 0;
+            });
+            const resultan = Math.sqrt(totalFx ** 2 + totalFy ** 2);
+            const sudutRad = Math.atan2(totalFy, totalFx);
+            const sudutDeg = sudutRad * (180 / Math.PI);
+            document.getElementById('hasilResultan').innerHTML =
+                `Total Fx: ${totalFx.toFixed(2)} N<br>
+                 Total Fy: ${totalFy.toFixed(2)} N<br>
+                 <b>Resultan Gaya: ${resultan.toFixed(2)} N</b><br>
+                 <b>Sudut Resultan: ${sudutDeg.toFixed(2)} &deg;</b>`;
+        }
+
+        window.onload = hitungResultan;
+    </script>
+</body>
+</html>

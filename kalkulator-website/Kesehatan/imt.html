@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator Indeks Massa Tubuh (IMT)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h2>Kalkulator Indeks Massa Tubuh (IMT)</h2>
+        <div class="input-group"><label for="berat">Berat Badan (kg):</label><input type="number" id="berat" value="70" onkeyup="hitungIMT()"></div>
+        <div class="input-group"><label for="tinggi">Tinggi Badan (cm):</label><input type="number" id="tinggi" value="175" onkeyup="hitungIMT()"></div>
+        <div class="result" id="hasilIMT">
+            IMT: ...
+            <div id="statusIMT" class="status">Status: ...</div>
+        </div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu Kesehatan</a>
+    </div>
+    <script>
+        function hitungIMT() {
+            const berat = parseFloat(document.getElementById('berat').value);
+            const tinggi = parseFloat(document.getElementById('tinggi').value) / 100;
+            if (berat > 0 && tinggi > 0) {
+                const imt = berat / (tinggi * tinggi);
+                let status = '';
+                if (imt < 18.5) { status = 'Berat badan kurang';
+                } else if (imt >= 18.5 && imt <= 24.9) { status = 'Berat badan normal';
+                } else if (imt >= 25 && imt <= 29.9) { status = 'Berat badan berlebih';
+                } else { status = 'Obesitas'; }
+                document.getElementById('hasilIMT').innerHTML = `IMT: ${imt.toFixed(2)}<div id="statusIMT" class="status">Status: ${status}</div>`;
+            } else {
+                document.getElementById('hasilIMT').innerHTML = `IMT: ...<div id="statusIMT" class="status">Status: ...</div>`;
+            }
+        }
+        window.onload = hitungIMT;
+    </script>
+</body>
+</html>

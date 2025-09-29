@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Estimasi Biaya Listrik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Estimasi Biaya Listrik Bulanan</h2>
+        <div class="input-group">
+            <label for="daya">Pilih Golongan Daya Listrik Anda:</label>
+            <select id="daya" onchange="hitungBiaya()">
+                <option value="1352">900 VA</option>
+                <option value="1444.70" selected>1300 VA & 2200 VA</option>
+                <option value="1699.53">3500 VA ke atas</option>
+            </select>
+            <small>*Tarif per kWh (Rp) dapat berubah.</small>
+        </div>
+        <div id="appliance-list">
+            <div class="appliance-item">
+                <div><label>Nama Alat</label><input type="text" class="nama-alat" placeholder="cth: Kulkas" value="Kulkas"></div>
+                <div><label>Daya (Watt)</label><input type="number" class="daya-alat" value="100" onkeyup="hitungBiaya()"></div>
+                <div><label>Jam/Hari</label><input type="number" class="jam-pakai" value="24" onkeyup="hitungBiaya()"></div>
+                <button class="btn remove-btn" onclick="this.parentElement.remove(); hitungBiaya();">X</button>
+            </div>
+        </div>
+        <button class="btn add-btn" onclick="tambahAlat()">+ Tambah Alat</button>
+        <div class="result" id="hasilBiaya">Total Pemakaian: 0 kWh/bulan<br>Total Biaya: Rp 0</div>
+        <a href="./" class="back-link">&lt; Kembali ke Menu</a>
+    </div>
+    <script>
+        function tambahAlat() {
+            const list = document.getElementById('appliance-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'appliance-item';
+            newItem.innerHTML = `
+                <div><input type="text" class="nama-alat" placeholder="Nama Alat" onkeyup="hitungBiaya()"></div>
+                <div><input type="number" class="daya-alat" placeholder="Watt" onkeyup="hitungBiaya()"></div>
+                <div><input type="number" class="jam-pakai" placeholder="Jam/Hari" onkeyup="hitungBiaya()"></div>
+                <button class="btn remove-btn" onclick="this.parentElement.remove(); hitungBiaya();">X</button>
+            `;
+            list.appendChild(newItem);
+        }
+        function hitungBiaya() {
+            const tarifPerKwh = parseFloat(document.getElementById('daya').value);
+            const appliances = document.querySelectorAll('.appliance-item');
+            let totalKwhBulanan = 0;
+            appliances.forEach(item => {
+                const watt = parseFloat(item.querySelector('.daya-alat').value) || 0;
+                const jam = parseFloat(item.querySelector('.jam-pakai').value) || 0;
+                if (watt > 0 && jam > 0) {
+                    const kwhHarian = (watt / 1000) * jam;
+                    totalKwhBulanan += kwhHarian;
+                }
+            });
+            totalKwhBulanan *= 30;
+            const totalBiaya = totalKwhBulanan * tarifPerKwh;
+            const formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+            document.getElementById('hasilBiaya').innerHTML = `
+                Total Pemakaian: ${totalKwhBulanan.toFixed(2)} kWh/bulan<br>
+                Total Biaya: ${formatter.format(totalBiaya)}`;
+        }
+        window.onload = hitungBiaya;
+    </script>
+</body>
+</html>
